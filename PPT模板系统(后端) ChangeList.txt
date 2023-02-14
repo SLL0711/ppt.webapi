@@ -1,0 +1,37 @@
+****************readMe first****************
+1.comment:
++ :add a new issue or API.
+- :remove useless or error API.
+x :fix some exist bug.
+* :modify exist API.
+****************readMe first****************
+
+********************************************
+Online version : 1.0.1
+Author      : Eidy Guo
+Date        : 2022/12/06
+Change List :
++：数据库增加advice表
++：userController新增创建意见接口
++：PptController中新增根据searchKey搜索最新和最热ppt接口
+*：修改FileUploadController中上传ppt时标签数量限制为2～4
+
+-- -----------------------------------------
+--Table structure for tb_advice
+--建议反馈表
+-- -----------------------------------------
+CREATE TABLE `tb_advice` (
+    `ID` int NOT NULL AUTO_INCREMENT,
+    `Advice` varchar(200) CHARACTER SET utf8 NOT NULL,
+    `type` int(1) NOT NULL,
+    `CreatedByID` int NULL,
+    `CreateTime` datetime(6) NOT NULL,
+    CONSTRAINT `PK_tb_advice` PRIMARY KEY (`ID`),
+    CONSTRAINT `FK_tb_advice_tb_users_CreatedByID` FOREIGN KEY (`CreatedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT
+) CHARACTER SET utf8 COMMENT 'advice建议表';
+
+
+目前登录，下载ppt，收藏ppt，上传ppt，查看ppt详细信息，根据关键词查找ppt，修改个人信息等功能已实现。
+********************************************
+
+

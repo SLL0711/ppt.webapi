@@ -1,0 +1,19 @@
+﻿START TRANSACTION;
+
+CREATE TABLE `tb_advice` (
+    `ID` int NOT NULL AUTO_INCREMENT,
+    `Advice` varchar(200) CHARACTER SET utf8 NOT NULL,
+    `type` int(1) NOT NULL,
+    `CreatedByID` int NULL,
+    `CreateTime` datetime(6) NOT NULL,
+    CONSTRAINT `PK_tb_advice` PRIMARY KEY (`ID`),
+    CONSTRAINT `FK_tb_advice_tb_users_CreatedByID` FOREIGN KEY (`CreatedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT
+) CHARACTER SET utf8 COMMENT 'advice建议表';
+
+CREATE INDEX `IX_tb_advice_CreatedByID` ON `tb_advice` (`CreatedByID`);
+
+INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20221206081455_AddAdvice', '5.0.17');
+
+COMMIT;
+

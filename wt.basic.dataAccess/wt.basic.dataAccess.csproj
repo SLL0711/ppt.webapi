@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\wt.basic.db\wt.basic.db.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Repository\Favourites\" />
+    <None Remove="Repository\Tag\" />
+    <None Remove="Repository\Advice\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repository\Favourites\" />
+    <Folder Include="Repository\Tag\" />
+    <Folder Include="Repository\Advice\" />
+  </ItemGroup>
+</Project>

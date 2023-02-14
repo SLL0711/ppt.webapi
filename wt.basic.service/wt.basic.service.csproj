@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\wt.basic.dataAccess\wt.basic.dataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="User\" />
+    <None Remove="Ppt\" />
+    <None Remove="Tag\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="User\" />
+    <Folder Include="Ppt\" />
+    <Folder Include="Tag\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Slides">
+      <HintPath>..\packages\aspose.slides.net\Aspose.Slides.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes></EmbedInteropTypes>
+    </Reference>
+    <Reference Include="wt.lib">
+      <HintPath>..\..\wt.lib\wt.lib\bin\Debug\netcoreapp3.1\wt.lib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Model\PptDetailModel.cs" />
+  </ItemGroup>
+</Project>

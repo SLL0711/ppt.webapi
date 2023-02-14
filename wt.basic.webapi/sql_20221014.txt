@@ -1,0 +1,97 @@
+﻿CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
+    `MigrationId` varchar(150) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    PRIMARY KEY (`MigrationId`)
+);
+
+START TRANSACTION;
+
+CREATE TABLE `tb_users` (
+    `ID` int NOT NULL AUTO_INCREMENT,
+    `Name` varchar(50) NULL,
+    `AccountName` varchar(50) NOT NULL,
+    `Password` varchar(50) NULL,
+    `Telephone` varchar(20) NULL,
+    `Sort` int NULL,
+    `State` int NOT NULL,
+    `CreatedOn` datetime NOT NULL,
+    `ModifiedOn` datetime NOT NULL,
+    PRIMARY KEY (`ID`)
+) CHARACTER SET utf8;
+
+CREATE TABLE `tb_ppt` (
+    `ID` int NOT NULL AUTO_INCREMENT,
+    `Name` varchar(50) NOT NULL,
+    `Sort` int NULL,
+    `State` int NOT NULL,
+    `CreatedOn` datetime NOT NULL,
+    `ModifiedOn` datetime NOT NULL,
+    `CreatedByID` int NULL,
+    `ModifiedByID` int NULL,
+    `Min_picture` varchar(200) NOT NULL,
+    `Download_path` varchar(200) NOT NULL,
+    PRIMARY KEY (`ID`),
+    CONSTRAINT `FK_tb_ppt_tb_users_CreatedByID` FOREIGN KEY (`CreatedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_tb_ppt_tb_users_ModifiedByID` FOREIGN KEY (`ModifiedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT
+) CHARACTER SET utf8;
+
+CREATE TABLE `tb_tags` (
+    `ID` int NOT NULL AUTO_INCREMENT,
+    `Name` varchar(50) NOT NULL,
+    `Sort` int(11) NULL,
+    `State` int NOT NULL,
+    `CreatedOn` datetime NOT NULL,
+    `ModifiedOn` datetime NOT NULL,
+    `CreatedByID` int NULL,
+    `ModifiedByID` int NULL,
+    PRIMARY KEY (`ID`),
+    CONSTRAINT `FK_tb_tags_tb_users_CreatedByID` FOREIGN KEY (`CreatedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_tb_tags_tb_users_ModifiedByID` FOREIGN KEY (`ModifiedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT
+) CHARACTER SET utf8;
+
+CREATE TABLE `tb_picture` (
+    `ID` int NOT NULL AUTO_INCREMENT,
+    `Name` varchar(50) NOT NULL,
+    `Path` varchar(200) NOT NULL,
+    `Sort` int NULL,
+    `State` int NOT NULL,
+    `CreatedOn` datetime NOT NULL,
+    `ModifiedOn` datetime NOT NULL,
+    `CreatedByID` int NULL,
+    `ModifiedByID` int NULL,
+    `Tb_pptID` int NULL,
+    PRIMARY KEY (`ID`),
+    CONSTRAINT `FK_tb_picture_tb_ppt_Tb_pptID` FOREIGN KEY (`Tb_pptID`) REFERENCES `tb_ppt` (`ID`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_tb_picture_tb_users_CreatedByID` FOREIGN KEY (`CreatedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_tb_picture_tb_users_ModifiedByID` FOREIGN KEY (`ModifiedByID`) REFERENCES `tb_users` (`ID`) ON DELETE RESTRICT
+) CHARACTER SET utf8;
+
+CREATE TABLE `Tb_pptTb_tags` (
+    `TagsID` int NOT NULL,
+    `pptID` int NOT NULL,
+    PRIMARY KEY (`TagsID`, `pptID`),
+    CONSTRAINT `FK_Tb_pptTb_tags_tb_ppt_pptID` FOREIGN KEY (`pptID`) REFERENCES `tb_ppt` (`ID`) ON DELETE CASCADE,
+    CONSTRAINT `FK_Tb_pptTb_tags_tb_tags_TagsID` FOREIGN KEY (`TagsID`) REFERENCES `tb_tags` (`ID`) ON DELETE CASCADE
+);
+
+CREATE INDEX `IX_tb_picture_CreatedByID` ON `tb_picture` (`CreatedByID`);
+
+CREATE INDEX `IX_tb_picture_ModifiedByID` ON `tb_picture` (`ModifiedByID`);
+
+CREATE INDEX `IX_tb_picture_Tb_pptID` ON `tb_picture` (`Tb_pptID`);
+
+CREATE INDEX `IX_tb_ppt_CreatedByID` ON `tb_ppt` (`CreatedByID`);
+
+CREATE INDEX `IX_tb_ppt_ModifiedByID` ON `tb_ppt` (`ModifiedByID`);
+
+CREATE INDEX `IX_Tb_pptTb_tags_pptID` ON `Tb_pptTb_tags` (`pptID`);
+
+CREATE INDEX `IX_tb_tags_CreatedByID` ON `tb_tags` (`CreatedByID`);
+
+CREATE INDEX `IX_tb_tags_ModifiedByID` ON `tb_tags` (`ModifiedByID`);
+
+INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20221014081017_InitialCreate', '5.0.17');
+
+COMMIT;
+

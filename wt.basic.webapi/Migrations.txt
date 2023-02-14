@@ -1,0 +1,16 @@
+# 安装dotnet ef
+dotnet tool install --global dotnet-ef
+
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+# 增加一次迁移 指定目标项目
+dotnet ef migrations add InitialCreate --project ../wt.basic.db
+
+# 更新数据库
+dotnet ef database update
+
+# 回退到上一次迁移
+dotnet ef migrations remove --project ../wt.basic.db
+
+# 生成迁移sql
+dotnet ef migrations script InitialCreate ChangeTbtagsFields --output ./sql.txt
